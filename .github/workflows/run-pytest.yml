@@ -1,6 +1,22 @@
 name: Run pytest
 
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - ".github/workflows/run-pytest.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - ".github/workflows/run-pytest.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
